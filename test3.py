@@ -11,9 +11,11 @@ img_ellipas = cv2.ellipse(img, (256,256), (100,50),0,0,180,255,-1)
 
 pts = np.array([[10,5],[20,30],[70,20],[50,10]], np.int32)
 pts = pts.reshape((-1,1,2))
-img_polylines = cv2.polylines(img,[pts], True,(255,255,0),4)
+img_polylines = cv2.polylines(img,[pts], True,(0,255,255),4)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 cv2.putText(img,'Chihuahua',(10,500), font, 2,(255,255,255),5)
 cv2.imshow('image',img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
