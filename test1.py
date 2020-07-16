@@ -4,11 +4,22 @@ import cv2
 from matplotlib import pyplot as plt
 
 
-image = cv2.imread('image1.jpg')
-image2 = cv2.imread('image2.jpg')
+image = cv2.imread('image3.jpg',)
+image2 = cv2.imread('image4.jpg')
 
-dst = cv2.addWeighted(image, 0.7, image2, 0.3, 0)
+row,col,channels = image2.shape
+roi = image[0:row, 0:col]
 
-cv2.imshow('Capoo', dst)
+img2gray = cv2.cvtColor(image2,cv2.COLOR_BGR2GRAY)
+ret, mask = cv2.threshold(img2gray, 175, 255, cv2.THRESH_BINARY)
+mask_inv = cv2.bitwise_not(mask)
+
+image_bg = cv2.bitwise_and(roi, roi, mask = mask)
+image2_fg = cv2.bitwise_and(image2, image2, mask = mask_inv)
+
+dst = cv2.add(image_bg,image2_fg)
+image[0:row, 0:col] = dst
+
+cv2.imshow('Capoo', image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
